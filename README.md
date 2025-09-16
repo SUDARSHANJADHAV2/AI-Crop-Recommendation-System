@@ -102,10 +102,5 @@ The application will then be available at `http://localhost:8501`.
 
 A big thank you to the open-source community for providing the tools and libraries that made this project possible.
 
-## 👨‍💻 Connect with me
-
--   **GitHub**: [PRINCE-GUPTA-101](https://github.com/PRINCE-GUPTA-101)
--   **LinkedIn**: [prince-gupta-034341201/](https://www.linkedin.com/in/prince-gupta-034341201/)
-
 ---
 *This README was generated with the help of an AI assistant.*
