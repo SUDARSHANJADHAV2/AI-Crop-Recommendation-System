@@ -17,29 +17,102 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better UI
+# Custom CSS for better UI with dark mode
 st.markdown("""
     <style>
     .main {
         padding: 2rem;
     }
     .stApp {
-        background-color: #f5f7f9;
+        background-color: #1a1a1a;
+        color: #ffffff;
     }
     .stButton>button {
         background-color: #4CAF50;
         color: white;
         font-weight: bold;
-        border-radius: 5px;
+        border-radius: 8px;
         padding: 0.5rem 1rem;
         width: 100%;
+        border: none;
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #45a049;
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+        transform: translateY(-1px);
     }
     h1, h2, h3 {
-        color: #2E7D32;
+        color: #66BB6A !important;
+        font-weight: bold;
     }
     .stSidebar {
-        background-color: #E8F5E9;
+        background-color: #2d2d2d;
         padding: 1rem;
+        border-right: 1px solid #444;
+    }
+    .stSidebar .stMarkdown {
+        color: #ffffff;
+    }
+    /* Input field styling */
+    .stNumberInput > div > div > input {
+        background-color: #333333;
+        color: #ffffff;
+        border: 1px solid #555;
+        border-radius: 4px;
+    }
+    .stNumberInput > div > div > input:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 1px #4CAF50;
+    }
+    /* Label styling */
+    .stNumberInput > label {
+        color: #ffffff !important;
+        font-weight: 500;
+    }
+    /* Tab styling */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: #2d2d2d;
+    }
+    .stTabs [data-baseweb="tab"] {
+        color: #ffffff;
+        background-color: #333333;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #4CAF50 !important;
+        color: white !important;
+    }
+    /* Dataframe styling */
+    .stDataFrame {
+        background-color: #333333;
+    }
+    /* Text elements */
+    .stMarkdown {
+        color: #ffffff;
+    }
+    /* Info box styling */
+    .stInfo {
+        background-color: #2d4a2d;
+        color: #ffffff;
+        border: 1px solid #4CAF50;
+    }
+    /* Success/warning boxes */
+    .stSuccess {
+        background-color: #1b4d1b;
+        color: #ffffff;
+    }
+    .stError {
+        background-color: #4d1b1b;
+        color: #ffffff;
+    }
+    /* Metric styling */
+    [data-testid="metric-container"] {
+        background-color: #333333;
+        border: 1px solid #555;
+        padding: 1rem;
+        border-radius: 8px;
+        color: #ffffff;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -139,9 +212,9 @@ def main():
                         
                         # Display result with styling
                         st.markdown(f"""
-                        <div style="background-color:#E8F5E9; padding:20px; border-radius:10px; margin-bottom:20px;">
-                            <h3 style="color:#2E7D32; text-align:center;">Recommended Crop</h3>
-                            <h2 style="color:#1B5E20; text-align:center; text-transform:uppercase;">{prediction[0]}</h2>
+                        <div style="background-color:#2d5a2d; padding:20px; border-radius:10px; margin-bottom:20px; border: 2px solid #4CAF50; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">
+                            <h3 style="color:#81C784; text-align:center; margin-bottom:10px; font-weight:bold;">🌱 Recommended Crop</h3>
+                            <h2 style="color:#A5D6A7; text-align:center; text-transform:uppercase; font-size:2.5rem; margin:0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">{prediction[0]}</h2>
                         </div>
                         """, unsafe_allow_html=True)
                         
@@ -157,11 +230,20 @@ def main():
                         param_names = ['Nitrogen', 'Phosphorus', 'Potassium', 'Temperature', 'Humidity', 'pH', 'Rainfall']
                         param_values = [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]
                         
-                        fig, ax = plt.subplots(figsize=(10, 5))
-                        bars = ax.bar(param_names, param_values, color=['#1976D2', '#388E3C', '#FBC02D', '#D32F2F', '#7B1FA2', '#0097A7', '#1565C0'])
-                        ax.set_title('Your Input Parameters')
-                        ax.set_ylabel('Value')
-                        plt.xticks(rotation=45)
+                        # Set dark theme for matplotlib
+                        plt.style.use('dark_background')
+                        fig, ax = plt.subplots(figsize=(10, 5), facecolor='#1a1a1a')
+                        bars = ax.bar(param_names, param_values, color=['#1976D2', '#4CAF50', '#FFC107', '#F44336', '#9C27B0', '#00BCD4', '#3F51B5'])
+                        ax.set_title('Your Input Parameters', color='white', fontsize=14, fontweight='bold')
+                        ax.set_ylabel('Value', color='white', fontweight='bold')
+                        ax.set_facecolor('#2d2d2d')
+                        ax.tick_params(colors='white')
+                        ax.spines['bottom'].set_color('white')
+                        ax.spines['top'].set_color('white')
+                        ax.spines['right'].set_color('white')
+                        ax.spines['left'].set_color('white')
+                        plt.xticks(rotation=45, color='white')
+                        plt.yticks(color='white')
                         plt.tight_layout()
                         st.pyplot(fig)
             else:
@@ -181,31 +263,55 @@ def main():
         
         # Show distribution of crops in the dataset
         st.subheader("Crop Distribution")
-        fig, ax = plt.subplots(figsize=(12, 6))
+        plt.style.use('dark_background')
+        fig, ax = plt.subplots(figsize=(12, 6), facecolor='#1a1a1a')
         crop_counts = df['label'].value_counts()
-        sns.barplot(x=crop_counts.index, y=crop_counts.values, ax=ax)
-        plt.xticks(rotation=90)
-        plt.title('Distribution of Crops in Dataset')
+        sns.barplot(x=crop_counts.index, y=crop_counts.values, ax=ax, palette='viridis')
+        ax.set_facecolor('#2d2d2d')
+        ax.set_title('Distribution of Crops in Dataset', color='white', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Crop Type', color='white', fontweight='bold')
+        ax.set_ylabel('Number of Records', color='white', fontweight='bold')
+        ax.tick_params(colors='white')
+        ax.spines['bottom'].set_color('white')
+        ax.spines['top'].set_color('white')
+        ax.spines['right'].set_color('white')
+        ax.spines['left'].set_color('white')
+        plt.xticks(rotation=90, color='white')
+        plt.yticks(color='white')
         plt.tight_layout()
         st.pyplot(fig)
         
     with tab3:
         st.markdown("### About KrushiAI")
-        st.write("""
-        KrushiAI is an intelligent crop recommendation system that uses machine learning to suggest the most suitable crops based on soil composition and environmental factors.
-        
-        **How it works:**
-        1. The system analyzes your input parameters (N, P, K values, temperature, humidity, pH, and rainfall)
-        2. It processes this data through a trained Random Forest model
-        3. The model predicts the most suitable crop for your conditions
-        
-        **Benefits:**
-        - Optimize agricultural yield by planting suitable crops
-        - Reduce resource wastage by avoiding unsuitable crop selections
-        - Make data-driven farming decisions
-        
-        This application was built using Streamlit and scikit-learn.
-        """)
+        st.markdown("""
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border: 1px solid #4CAF50;">
+            <p style="color: #ffffff; font-size: 16px; line-height: 1.6;">
+                🌾 <strong>KrushiAI</strong> is an intelligent crop recommendation system that uses machine learning 
+                to suggest the most suitable crops based on soil composition and environmental factors.
+            </p>
+            
+            <h4 style="color: #81C784; margin-top: 20px;">🔬 How it works:</h4>
+            <ol style="color: #ffffff; font-size: 14px; line-height: 1.6;">
+                <li>The system analyzes your input parameters (N, P, K values, temperature, humidity, pH, and rainfall)</li>
+                <li>It processes this data through a trained Random Forest model</li>
+                <li>The model predicts the most suitable crop for your conditions</li>
+            </ol>
+            
+            <h4 style="color: #81C784; margin-top: 20px;">🎯 Benefits:</h4>
+            <ul style="color: #ffffff; font-size: 14px; line-height: 1.6;">
+                <li>🚀 Optimize agricultural yield by planting suitable crops</li>
+                <li>💰 Reduce resource wastage by avoiding unsuitable crop selections</li>
+                <li>📊 Make data-driven farming decisions</li>
+                <li>🌱 Sustainable farming practices</li>
+            </ul>
+            
+            <hr style="border: 1px solid #4CAF50; margin: 20px 0;">
+            <p style="color: #A5D6A7; font-size: 14px; text-align: center; margin-bottom: 0;">
+                🛠️ Built with <strong>Streamlit</strong> and <strong>scikit-learn</strong> | 
+                🧠 Powered by <strong>Random Forest</strong> algorithm
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
 ## Running the main function
 if __name__ == '__main__':
