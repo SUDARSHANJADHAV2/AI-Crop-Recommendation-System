@@ -98,9 +98,3 @@ The application will then be available at `http://localhost:8501`.
 -   Include a plant disease identification module as part of the larger KrushiAI project.
 -   Improve the user interface and add more visualizations.
 
-## 🙏 Acknowledgements
-
-A big thank you to the open-source community for providing the tools and libraries that made this project possible.
-
----
-*This README was generated with the help of an AI assistant.*
