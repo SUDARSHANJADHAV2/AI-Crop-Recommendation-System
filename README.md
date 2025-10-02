@@ -7,7 +7,7 @@ Welcome to the **KrushiAI Crop Recommendation System**! This intelligent web app
 ## 🚀 Live Demo
 
 You can access the live application here:
-[https://krushiai-crop-recommendation-system.streamlit.app/](https://krushiai-crop-recommendation-system.streamlit.app/)
+[🌾 KrushiAI - Crop Recommendation System 🌾](https://krushiai-crop-recommendation-system.streamlit.app/)
 
 ## ✨ Features
 
