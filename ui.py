@@ -1,8 +1,6 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import seaborn as sns
 from utils import predict_crop, load_data
-import json
+from visualization import plot_input_parameters, plot_crop_distribution
 
 def main_ui(crop_info):
     tab1, tab2, tab3 = st.tabs(["🔮 Prediction", "📊 Dataset Info", "ℹ️ About"])
@@ -30,9 +28,10 @@ def main_ui(crop_info):
         with col2:
             st.subheader("Recommendation Results")
             if predict_button:
-                inputs = [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]
-                if not all(inputs) or any(x < 0 for x in inputs):
-                    st.error("Please fill in all input fields with valid values before predicting.")
+                if not all([nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]):
+                    st.error("Please fill in all input fields before predicting.")
+                elif any(val < 0 for val in [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]):
+                    st.error("Input values cannot be negative. Please enter valid parameters.")
                 else:
                     with st.spinner('Analyzing your parameters...'):
                         prediction = predict_crop(nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall)
@@ -49,25 +48,10 @@ def main_ui(crop_info):
                             st.markdown("### Crop Information")
                             st.info(crop_info[recommended_crop])
 
-                        st.markdown("### Parameter Importance")
+                        st.markdown("### Your Input Parameters")
                         param_names = ['Nitrogen', 'Phosphorus', 'Potassium', 'Temperature', 'Humidity', 'pH', 'Rainfall']
                         param_values = [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]
-
-                        plt.style.use('dark_background')
-                        fig, ax = plt.subplots(figsize=(10, 5), facecolor='#1a1a1a')
-                        bars = ax.bar(param_names, param_values, color=['#1976D2', '#4CAF50', '#FFC107', '#F44336', '#9C27B0', '#00BCD4', '#3F51B5'])
-                        ax.set_title('Your Input Parameters', color='white', fontsize=14, fontweight='bold')
-                        ax.set_ylabel('Value', color='white', fontweight='bold')
-                        ax.set_facecolor('#2d2d2d')
-                        ax.tick_params(colors='white')
-                        ax.spines['bottom'].set_color('white')
-                        ax.spines['top'].set_color('white')
-                        ax.spines['right'].set_color('white')
-                        ax.spines['left'].set_color('white')
-                        plt.xticks(rotation=45, color='white')
-                        plt.yticks(color='white')
-                        plt.tight_layout()
-                        st.pyplot(fig)
+                        plot_input_parameters(param_names, param_values)
             else:
                 st.info("Fill in the parameters and click 'Predict Crop' to get your recommendation.")
 
@@ -83,23 +67,7 @@ def main_ui(crop_info):
         st.dataframe(df.head())
 
         st.subheader("Crop Distribution")
-        plt.style.use('dark_background')
-        fig, ax = plt.subplots(figsize=(12, 6), facecolor='#1a1a1a')
-        crop_counts = df['label'].value_counts()
-        sns.barplot(x=crop_counts.index, y=crop_counts.values, ax=ax, palette='viridis')
-        ax.set_facecolor('#2d2d2d')
-        ax.set_title('Distribution of Crops in Dataset', color='white', fontsize=14, fontweight='bold')
-        ax.set_xlabel('Crop Type', color='white', fontweight='bold')
-        ax.set_ylabel('Number of Records', color='white', fontweight='bold')
-        ax.tick_params(colors='white')
-        ax.spines['bottom'].set_color('white')
-        ax.spines['top'].set_color('white')
-        ax.spines['right'].set_color('white')
-        ax.spines['left'].set_color('white')
-        plt.xticks(rotation=90, color='white')
-        plt.yticks(color='white')
-        plt.tight_layout()
-        st.pyplot(fig)
+        plot_crop_distribution(df)
 
     with tab3:
         st.markdown("### About KrushiAI")
