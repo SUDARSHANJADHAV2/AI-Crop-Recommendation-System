@@ -2,6 +2,7 @@ import streamlit as st
 import json
 from PIL import Image
 from ui import main_ui
+from config import CROP_INFO_JSON_PATH, CROP_IMAGE_PATH, CSS_PATH
 
 def load_css(file_path):
     with open(file_path) as f:
@@ -19,15 +20,16 @@ def main():
         initial_sidebar_state="expanded"
     )
 
-    load_css('style.css')
-    crop_info = load_crop_info('crop_info.json')
+    load_css(CSS_PATH)
+
+    crop_info = load_crop_info(CROP_INFO_JSON_PATH)
 
     col1, col2 = st.columns([1, 3])
     with col1:
         try:
-            img = Image.open("crop.png")
+            img = Image.open(CROP_IMAGE_PATH)
             st.image(img, width=150)
-        except:
+        except FileNotFoundError:
             st.write("🌱")
 
     with col2:
