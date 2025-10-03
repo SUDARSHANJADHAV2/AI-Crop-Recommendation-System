@@ -2,6 +2,8 @@
 
 Welcome to the **KrushiAI Crop Recommendation System**! This intelligent web application is a key component of my final year mega project, **"KrushiAI - AI Based Plant Diseases Identification, Crop & Fertilizer Recommendation"**. This tool leverages Machine Learning to help farmers make informed decisions by recommending the most suitable crop to plant based on various soil and environmental factors.
 
+You can check out the [Jupyter Notebook](KrushiAI.ipynb) for a detailed analysis and model development process.
+
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://krushiai-crop-recommendation-system.streamlit.app/)
 
 ## 🚀 Live Demo
@@ -59,9 +61,13 @@ Several machine learning models were trained and evaluated to find the best one 
 -   XGBoost
 -   K-Nearest Neighbors (KNN)
 
-The Random Forest model was chosen for the final application due to its high accuracy of **99.5%** on the test set.
+The Random Forest model was chosen for the final application due to its high accuracy of **99.77%** on the test set.
 
-<!-- You can add your model accuracy comparison image here -->
+### Accuracy Comparison
+![Accuracy Comparison](KrushiAI_executed_files/KrushiAI_executed_26_0.png)
+
+### Per-Crop Accuracy for the Best Model (Random Forest)
+![Per-Crop Accuracy](KrushiAI_executed_files/KrushiAI_executed_28_0.png)
 
 ## 🚀 How to Run Locally
 
@@ -97,4 +103,3 @@ The application will then be available at `http://localhost:8501`.
 -   Add a fertilizer recommendation feature.
 -   Include a plant disease identification module as part of the larger KrushiAI project.
 -   Improve the user interface and add more visualizations.
-

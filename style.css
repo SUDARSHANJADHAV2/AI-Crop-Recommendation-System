@@ -1,0 +1,94 @@
+.main {
+    padding: 2rem;
+}
+.stApp {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+.stButton>button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    border: none;
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+}
+.stButton>button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+    transform: translateY(-1px);
+}
+h1, h2, h3 {
+    color: #66BB6A !important;
+    font-weight: bold;
+}
+.stSidebar {
+    background-color: #2d2d2d;
+    padding: 1rem;
+    border-right: 1px solid #444;
+}
+.stSidebar .stMarkdown {
+    color: #ffffff;
+}
+/* Input field styling */
+.stNumberInput > div > div > input {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+.stNumberInput > div > div > input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 1px #4CAF50;
+}
+/* Label styling */
+.stNumberInput > label {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: #2d2d2d;
+}
+.stTabs [data-baseweb="tab"] {
+    color: #ffffff;
+    background-color: #333333;
+}
+.stTabs [aria-selected="true"] {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+/* Dataframe styling */
+.stDataFrame {
+    background-color: #333333;
+}
+/* Text elements */
+.stMarkdown {
+    color: #ffffff;
+}
+/* Info box styling */
+.stInfo {
+    background-color: #2d4a2d;
+    color: #ffffff;
+    border: 1px solid #4CAF50;
+}
+/* Success/warning boxes */
+.stSuccess {
+    background-color: #1b4d1b;
+    color: #ffffff;
+}
+.stError {
+    background-color: #4d1b1b;
+    color: #ffffff;
+}
+/* Metric styling */
+[data-testid="metric-container"] {
+    background-color: #333333;
+    border: 1px solid #555;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #ffffff;
+}
