@@ -1,3 +1,8 @@
+# Log files
 *.log
-*.csv
-*.png
+
+# CSV files generated at runtime
+classification_report.csv
+
+# Images generated at runtime
+confusion_matrix.png

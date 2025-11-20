@@ -313,56 +313,56 @@ def dataset_info_tab():
         
 def about_tab():
     st.markdown("### About KrushiAI")
-        
-        # Create a styled container using Streamlit's native components
-        st.markdown("""
-        <div style="background-color: #2d2d2d; padding: 25px; border-radius: 12px; border: 2px solid #4CAF50; margin-bottom: 20px;">
-            <p style="color: #ffffff; font-size: 18px; line-height: 1.8; margin-bottom: 25px;">
-                🌾 <strong>KrushiAI</strong> is an intelligent crop recommendation system that uses machine learning 
-                to suggest the most suitable crops based on soil composition and environmental factors.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # How it works section
-        st.markdown("""
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px;">
-            <h4 style="color: #81C784; margin-top: 0; margin-bottom: 15px;">🔬 How it works:</h4>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        col1, col2 = st.columns([1, 20])
-        with col1:
-            st.write("")
-        with col2:
-            st.markdown("**1.** The system analyzes your input parameters (N, P, K values, temperature, humidity, pH, and rainfall)")
-            st.markdown("**2.** It processes this data through a trained Random Forest model")
-            st.markdown("**3.** The model predicts the most suitable crop for your conditions")
-        
-        # Benefits section
-        st.markdown("""
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin: 20px 0;">
-            <h4 style="color: #81C784; margin-top: 0; margin-bottom: 15px;">🎯 Benefits:</h4>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        col1, col2 = st.columns([1, 20])
-        with col1:
-            st.write("")
-        with col2:
-            st.markdown("• 🚀 **Optimize agricultural yield** by planting suitable crops")
-            st.markdown("• 💰 **Reduce resource wastage** by avoiding unsuitable crop selections")
-            st.markdown("• 📊 **Make data-driven farming decisions**")
-            st.markdown("• 🌱 **Promote sustainable farming practices**")
-        
-        # Footer section
-        st.markdown("""
-        <div style="background-color: #1a4a1a; padding: 15px; border-radius: 8px; text-align: center; margin-top: 30px; border: 1px solid #4CAF50;">
-            <p style="color: #A5D6A7; font-size: 14px; margin: 0;">
-                🛠️ Built with <strong>Streamlit</strong> and <strong>scikit-learn</strong> | 🧠 Powered by <strong>Random Forest</strong> algorithm
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+
+    # Create a styled container using Streamlit's native components
+    st.markdown("""
+    <div style="background-color: #2d2d2d; padding: 25px; border-radius: 12px; border: 2px solid #4CAF50; margin-bottom: 20px;">
+        <p style="color: #ffffff; font-size: 18px; line-height: 1.8; margin-bottom: 25px;">
+            🌾 <strong>KrushiAI</strong> is an intelligent crop recommendation system that uses machine learning
+            to suggest the most suitable crops based on soil composition and environmental factors.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # How it works section
+    st.markdown("""
+    <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px;">
+        <h4 style="color: #81C784; margin-top: 0; margin-bottom: 15px;">🔬 How it works:</h4>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col1, col2 = st.columns([1, 20])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown("**1.** The system analyzes your input parameters (N, P, K values, temperature, humidity, pH, and rainfall)")
+        st.markdown("**2.** It processes this data through a trained Random Forest model")
+        st.markdown("**3.** The model predicts the most suitable crop for your conditions")
+
+    # Benefits section
+    st.markdown("""
+    <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin: 20px 0;">
+        <h4 style="color: #81C784; margin-top: 0; margin-bottom: 15px;">🎯 Benefits:</h4>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col1, col2 = st.columns([1, 20])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown("• 🚀 **Optimize agricultural yield** by planting suitable crops")
+        st.markdown("• 💰 **Reduce resource wastage** by avoiding unsuitable crop selections")
+        st.markdown("• 📊 **Make data-driven farming decisions**")
+        st.markdown("• 🌱 **Promote sustainable farming practices**")
+
+    # Footer section
+    st.markdown("""
+    <div style="background-color: #1a4a1a; padding: 15px; border-radius: 8px; text-align: center; margin-top: 30px; border: 1px solid #4CAF50;">
+        <p style="color: #A5D6A7; font-size: 14px; margin: 0;">
+            🛠️ Built with <strong>Streamlit</strong> and <strong>scikit-learn</strong> | 🧠 Powered by <strong>Random Forest</strong> algorithm
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def main():
     # Create tabs for different sections
