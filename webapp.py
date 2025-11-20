@@ -20,8 +20,6 @@ st.set_page_config(
 
 # Custom CSS for better UI with dark mode
 st.markdown("""
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="KrushiAI - An intelligent crop recommendation system using machine learning to help farmers make informed decisions.">
     <style>
     .main {
         padding: 2rem;
@@ -117,32 +115,8 @@ st.markdown("""
         border-radius: 8px;
         color: #ffffff;
     }
-    @media (max-width: 768px) {
-        .stTabs [data-baseweb="tab-list"] {
-            flex-direction: column;
-        }
-        .stTabs [data-baseweb="tab"] {
-            width: 100%;
-            justify-content: center;
-        }
-        .stColumns {
-            flex-direction: column;
-        }
-        h1, h2, h3 {
-            text-align: center;
-        }
-    }
     </style>
 """, unsafe_allow_html=True)
-
-# Define file paths
-ASSETS_DIR = 'assets'
-DATA_DIR = 'data'
-MODELS_DIR = 'models'
-
-CROP_IMAGE_PATH = os.path.join(ASSETS_DIR, 'crop.png')
-DATASET_PATH = os.path.join(DATA_DIR, 'Crop_recommendation.csv')
-MODEL_PATH = os.path.join(MODELS_DIR, 'RF.pkl')
 
 # Display header followed by the image (image placed below the title)
 # The title and image are given the same visual width so they align neatly.
@@ -150,7 +124,7 @@ MODEL_PATH = os.path.join(MODELS_DIR, 'RF.pkl')
 header_width = 680
 st.markdown(f"<h1 style='text-align: left; display:inline-block; width:{header_width}px; color: #66BB6A; font-weight:700;'>KrushiAI: Smart Crop Recommendation System</h1>", unsafe_allow_html=True)
 try:
-    img = Image.open(CROP_IMAGE_PATH)
+    img = Image.open("crop.png")
     # Show the image below the header with the same width as the header for visual alignment
     st.image(img, width=header_width)
 except Exception:
@@ -160,20 +134,12 @@ except Exception:
 # Load the dataset for reference and display
 @st.cache_data
 def load_data():
-    try:
-        return pd.read_csv(DATASET_PATH)
-    except FileNotFoundError:
-        st.error(f"Dataset not found at {DATASET_PATH}. Please make sure the dataset file is in the correct directory.")
-        return None
+    return pd.read_csv('Crop_recommendation.csv')
 
 # Load the model
 @st.cache_resource
 def load_model():
-    try:
-        return pickle.load(open(MODEL_PATH, 'rb'))
-    except FileNotFoundError:
-        st.error(f"Model not found at {MODEL_PATH}. Please make sure the model file is in the correct directory.")
-        return None
+    return pickle.load(open('RF.pkl', 'rb'))
 
 # Function to make predictions
 def predict_crop(nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall):
@@ -208,111 +174,115 @@ crop_info = {
 }
 
 ## Streamlit code for the web app interface
-def prediction_tab():
-    st.markdown("### Get Your Crop Recommendation")
-    st.write("Enter your soil and climate parameters to get a personalized crop recommendation.")
+def main():
+    # Create tabs for different sections
+    tab1, tab2, tab3 = st.tabs(["🔮 Prediction", "📊 Dataset Info", "ℹ️ About"])
     
-    # Create two columns for input and results
-    col1, col2 = st.columns([1, 1])
-
-    with col1:
-        st.subheader("Soil Parameters")
-        nitrogen = st.number_input("🧪 Nitrogen (kg/ha)", min_value=0.0, max_value=140.0, value=50.0, step=1.0)
-        phosphorus = st.number_input("🧪 Phosphorus (kg/ha)", min_value=0.0, max_value=145.0, value=50.0, step=1.0)
-        potassium = st.number_input("🧪 Potassium (kg/ha)", min_value=0.0, max_value=205.0, value=50.0, step=1.0)
-        ph = st.number_input("🧪 pH Level", min_value=0.0, max_value=14.0, value=6.5, step=0.1)
+    with tab1:
+        st.markdown("### Get Your Crop Recommendation")
+        st.write("Enter your soil and climate parameters to get a personalized crop recommendation.")
         
-        st.subheader("Climate Parameters")
-        temperature = st.number_input("🌡️ Temperature (°C)", min_value=0.0, max_value=51.0, value=25.0, step=0.1)
-        humidity = st.number_input("💧 Humidity (%)", min_value=0.0, max_value=100.0, value=60.0, step=0.1)
-        rainfall = st.number_input("🌧️ Rainfall (mm)", min_value=0.0, max_value=500.0, value=100.0, step=0.1)
+        # Create two columns for input and results
+        col1, col2 = st.columns([1, 1])
         
-        predict_button = st.button("🔮 Predict Crop")
-
-    with col2:
-        st.subheader("Recommendation Results")
-        if predict_button:
-            inputs = np.array([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])
-            if not inputs.any() or np.isnan(inputs).any() or (inputs == 0).all():
-                st.error("Please fill in all input fields with valid values before predicting.")
+        with col1:
+            st.subheader("Soil Parameters")
+            nitrogen = st.number_input("🧪 Nitrogen (kg/ha)", min_value=0.0, max_value=140.0, value=50.0, step=1.0)
+            phosphorus = st.number_input("🧪 Phosphorus (kg/ha)", min_value=0.0, max_value=145.0, value=50.0, step=1.0)
+            potassium = st.number_input("🧪 Potassium (kg/ha)", min_value=0.0, max_value=205.0, value=50.0, step=1.0)
+            ph = st.number_input("🧪 pH Level", min_value=0.0, max_value=14.0, value=6.5, step=0.1)
+            
+            st.subheader("Climate Parameters")
+            temperature = st.number_input("🌡️ Temperature (°C)", min_value=0.0, max_value=51.0, value=25.0, step=0.1)
+            humidity = st.number_input("💧 Humidity (%)", min_value=0.0, max_value=100.0, value=60.0, step=0.1)
+            rainfall = st.number_input("🌧️ Rainfall (mm)", min_value=0.0, max_value=500.0, value=100.0, step=0.1)
+            
+            predict_button = st.button("🔮 Predict Crop")
+        
+        with col2:
+            st.subheader("Recommendation Results")
+            if predict_button:
+                inputs = np.array([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])
+                if not inputs.any() or np.isnan(inputs).any() or (inputs == 0).all():
+                    st.error("Please fill in all input fields with valid values before predicting.")
+                else:
+                    with st.spinner('Analyzing your parameters...'):
+                        prediction = predict_crop(nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall)
+                        recommended_crop = prediction[0].lower()
+                        
+                        # Display result with styling
+                        st.markdown(f"""
+                        <div style="background-color:#2d5a2d; padding:20px; border-radius:10px; margin-bottom:20px; border: 2px solid #4CAF50; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">
+                            <h3 style="color:#81C784; text-align:center; margin-bottom:10px; font-weight:bold;">🌱 Recommended Crop</h3>
+                            <h2 style="color:#A5D6A7; text-align:center; text-transform:uppercase; font-size:2.5rem; margin:0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">{prediction[0]}</h2>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        # Display crop information
+                        if recommended_crop in crop_info:
+                            st.markdown("### Crop Information")
+                            st.info(crop_info[recommended_crop])
+                        
+                        # Display parameter importance visualization
+                        st.markdown("### Parameter Importance")
+                        
+                        # Create a simple visualization of the input parameters
+                        param_names = ['Nitrogen', 'Phosphorus', 'Potassium', 'Temperature', 'Humidity', 'pH', 'Rainfall']
+                        param_values = [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]
+                        
+                        # Set dark theme for matplotlib
+                        plt.style.use('dark_background')
+                        fig, ax = plt.subplots(figsize=(10, 5), facecolor='#1a1a1a')
+                        bars = ax.bar(param_names, param_values, color=['#1976D2', '#4CAF50', '#FFC107', '#F44336', '#9C27B0', '#00BCD4', '#3F51B5'])
+                        ax.set_title('Your Input Parameters', color='white', fontsize=14, fontweight='bold')
+                        ax.set_ylabel('Value', color='white', fontweight='bold')
+                        ax.set_facecolor('#2d2d2d')
+                        ax.tick_params(colors='white')
+                        ax.spines['bottom'].set_color('white')
+                        ax.spines['top'].set_color('white')
+                        ax.spines['right'].set_color('white')
+                        ax.spines['left'].set_color('white')
+                        plt.xticks(rotation=45, color='white')
+                        plt.yticks(color='white')
+                        plt.tight_layout()
+                        st.pyplot(fig)
             else:
-                with st.spinner('Analyzing your parameters...'):
-                    prediction = predict_crop(nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall)
-                    recommended_crop = prediction[0].lower()
-
-                    # Display result with styling
-                    st.markdown(f"""
-                    <div style="background-color:#2d5a2d; padding:20px; border-radius:10px; margin-bottom:20px; border: 2px solid #4CAF50; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">
-                        <h3 style="color:#81C784; text-align:center; margin-bottom:10px; font-weight:bold;">🌱 Recommended Crop</h3>
-                        <h2 style="color:#A5D6A7; text-align:center; text-transform:uppercase; font-size:2.5rem; margin:0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">{prediction[0]}</h2>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    # Display crop information
-                    if recommended_crop in crop_info:
-                        st.markdown("### Crop Information")
-                        st.info(crop_info[recommended_crop])
-
-                    # Display parameter importance visualization
-                    st.markdown("### Parameter Importance")
-
-                    # Create a simple visualization of the input parameters
-                    param_names = ['Nitrogen', 'Phosphorus', 'Potassium', 'Temperature', 'Humidity', 'pH', 'Rainfall']
-                    param_values = [nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]
-
-                    # Set dark theme for matplotlib
-                    plt.style.use('dark_background')
-                    fig, ax = plt.subplots(figsize=(10, 5), facecolor='#1a1a1a')
-                    bars = ax.bar(param_names, param_values, color=['#1976D2', '#4CAF50', '#FFC107', '#F44336', '#9C27B0', '#00BCD4', '#3F51B5'])
-                    ax.set_title('Your Input Parameters', color='white', fontsize=14, fontweight='bold')
-                    ax.set_ylabel('Value', color='white', fontweight='bold')
-                    ax.set_facecolor('#2d2d2d')
-                    ax.tick_params(colors='white')
-                    ax.spines['bottom'].set_color('white')
-                    ax.spines['top'].set_color('white')
-                    ax.spines['right'].set_color('white')
-                    ax.spines['left'].set_color('white')
-                    plt.xticks(rotation=45, color='white')
-                    plt.yticks(color='white')
-                    plt.tight_layout()
-                    st.pyplot(fig)
-        else:
-            st.info("Fill in the parameters and click 'Predict Crop' to get your recommendation.")
+                st.info("Fill in the parameters and click 'Predict Crop' to get your recommendation.")
                 
-def dataset_info_tab():
-    st.markdown("### Dataset Information")
-    df = load_data()
-    st.write("This application uses a dataset with the following characteristics:")
-    st.write(f"- **Number of records**: {df.shape[0]}")
-    st.write(f"- **Number of features**: {df.shape[1]-1}")
-    st.write(f"- **Crop varieties**: {df['label'].nunique()}")
-
-    # Show sample data
-    st.subheader("Sample Data")
-    st.dataframe(df.head())
-
-    # Show distribution of crops in the dataset
-    st.subheader("Crop Distribution")
-    plt.style.use('dark_background')
-    fig, ax = plt.subplots(figsize=(12, 6), facecolor='#1a1a1a')
-    crop_counts = df['label'].value_counts()
-    sns.barplot(x=crop_counts.index, y=crop_counts.values, ax=ax, palette='viridis')
-    ax.set_facecolor('#2d2d2d')
-    ax.set_title('Distribution of Crops in Dataset', color='white', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Crop Type', color='white', fontweight='bold')
-    ax.set_ylabel('Number of Records', color='white', fontweight='bold')
-    ax.tick_params(colors='white')
-    ax.spines['bottom'].set_color('white')
-    ax.spines['top'].set_color('white')
-    ax.spines['right'].set_color('white')
-    ax.spines['left'].set_color('white')
-    plt.xticks(rotation=90, color='white')
-    plt.yticks(color='white')
-    plt.tight_layout()
-    st.pyplot(fig)
+    with tab2:
+        st.markdown("### Dataset Information")
+        df = load_data()
+        st.write("This application uses a dataset with the following characteristics:")
+        st.write(f"- **Number of records**: {df.shape[0]}")
+        st.write(f"- **Number of features**: {df.shape[1]-1}")
+        st.write(f"- **Crop varieties**: {df['label'].nunique()}")
         
-def about_tab():
-    st.markdown("### About KrushiAI")
+        # Show sample data
+        st.subheader("Sample Data")
+        st.dataframe(df.head())
+        
+        # Show distribution of crops in the dataset
+        st.subheader("Crop Distribution")
+        plt.style.use('dark_background')
+        fig, ax = plt.subplots(figsize=(12, 6), facecolor='#1a1a1a')
+        crop_counts = df['label'].value_counts()
+        sns.barplot(x=crop_counts.index, y=crop_counts.values, ax=ax, palette='viridis')
+        ax.set_facecolor('#2d2d2d')
+        ax.set_title('Distribution of Crops in Dataset', color='white', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Crop Type', color='white', fontweight='bold')
+        ax.set_ylabel('Number of Records', color='white', fontweight='bold')
+        ax.tick_params(colors='white')
+        ax.spines['bottom'].set_color('white')
+        ax.spines['top'].set_color('white')
+        ax.spines['right'].set_color('white')
+        ax.spines['left'].set_color('white')
+        plt.xticks(rotation=90, color='white')
+        plt.yticks(color='white')
+        plt.tight_layout()
+        st.pyplot(fig)
+        
+    with tab3:
+        st.markdown("### About KrushiAI")
         
         # Create a styled container using Streamlit's native components
         st.markdown("""
@@ -363,19 +333,6 @@ def about_tab():
             </p>
         </div>
         """, unsafe_allow_html=True)
-
-def main():
-    # Create tabs for different sections
-    tab1, tab2, tab3 = st.tabs(["🔮 Prediction", "📊 Dataset Info", "ℹ️ About"])
-
-    with tab1:
-        prediction_tab()
-
-    with tab2:
-        dataset_info_tab()
-
-    with tab3:
-        about_tab()
 
 ## Running the main function
 if __name__ == '__main__':
