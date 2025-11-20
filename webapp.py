@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
+from PIL import Image
 
 # Set page configuration
 st.set_page_config(
@@ -117,19 +118,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Display header with logo
-col1, col2 = st.columns([1, 3])
-with col1:
-    # Display Images
-    from PIL import Image
-    try:
-        img = Image.open("crop.png")
-        st.image(img, width=150)
-    except:
-        st.write("🌱")
-
-with col2:
-    st.markdown("<h1 style='text-align: left;'>KrushiAI: Smart Crop Recommendation System</h1>", unsafe_allow_html=True)
+# Display header followed by the image (image placed below the title)
+# The title and image are given the same visual width so they align neatly.
+# Adjust `header_width` if you want a different visual width.
+header_width = 680
+st.markdown(f"<h1 style='text-align: left; display:inline-block; width:{header_width}px; color: #66BB6A; font-weight:700;'>KrushiAI: Smart Crop Recommendation System</h1>", unsafe_allow_html=True)
+try:
+    img = Image.open("crop.png")
+    # Show the image below the header with the same width as the header for visual alignment
+    st.image(img, width=header_width)
+except Exception:
+    # Fallback emoji if image not found
+    st.write("🌱")
 
 # Load the dataset for reference and display
 @st.cache_data
