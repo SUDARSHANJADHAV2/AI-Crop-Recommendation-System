@@ -1,42 +1,48 @@
-# 🌾 KrushiAI - Crop Recommendation System 🌾
+# KrushiAI - Smart Crop Recommendation System
 
-Welcome to the **KrushiAI Crop Recommendation System**! This intelligent web application is a key component of my final year mega project, **"KrushiAI - AI Based Plant Diseases Identification, Crop & Fertilizer Recommendation"**. This tool leverages Machine Learning to help farmers make informed decisions by recommending the most suitable crop to plant based on various soil and environmental factors.
+KrushiAI is an intelligent crop recommendation system that leverages machine learning to help farmers make informed decisions about crop selection. By analyzing soil composition and environmental factors, this application suggests the most suitable crops to plant, leading to better yields and more sustainable farming practices.
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://krushiai-crop-recommendation-system.streamlit.app/)
-
-## 🚀 Live Demo
+## Live Demo
 
 You can access the live application here:
 [https://krushiai-crop-recommendation-system.streamlit.app/](https://krushiai-crop-recommendation-system.streamlit.app/)
 
-## ✨ Features
+## Key Features
 
--   **User-Friendly Interface**: A simple and intuitive web interface built with Streamlit.
--   **Real-time Predictions**: Get instant crop recommendations based on your input.
--   **Data-Driven Insights**: The recommendations are powered by a robust Random Forest model.
--   **Informative**: Provides details about the recommended crop.
--   **Interactive Visualizations**: Shows a chart of the input parameters.
+-   **Crop Recommendation:** Get personalized crop recommendations based on soil and climate data.
+-   **User-Friendly Interface:** A simple and intuitive web interface built with Streamlit.
+-   **Data-Driven Insights:** The recommendations are powered by a robust Random Forest model.
+-   **Detailed Information:** Provides details about the recommended crop and its ideal growing conditions.
 
-## ⚙️ How It Works
+## Tech Stack
 
-The application follows a simple workflow:
-1.  The user enters soil parameters (Nitrogen, Phosphorus, Potassium, and pH) and environmental factors (Temperature, Humidity, and Rainfall).
-2.  These inputs are fed into a pre-trained Random Forest model.
-3.  The model processes the data and predicts the most suitable crop.
-4.  The recommended crop is displayed to the user along with some information about it.
+-   **Python:** The core programming language.
+-   **Pandas & NumPy:** For data manipulation and numerical operations.
+-   **Scikit-learn:** For building and evaluating machine learning models.
+-   **Streamlit:** For creating and deploying the web application.
+-   **Jupyter Notebook:** For model development and experimentation.
 
-## 🛠️ Tech Stack
+## Project Structure
 
-This project is built using the following technologies:
+```
+├── assets/
+│   ├── crop.png
+├── data/
+│   ├── Crop_recommendation.csv
+├── models/
+│   ├── DecisionTree.pkl
+│   ├── KNeighborsClassifier.pkl
+│   ├── NBClassifier.pkl
+│   ├── RF.pkl
+│   ├── RandomForest.pkl
+│   └── XGBoost.pkl
+├── KrushiAI_Crop_Recommendation.ipynb
+├── README.md
+├── requirements.txt
+└── webapp.py
+```
 
--   **Python**: The core programming language.
--   **Pandas & NumPy**: For data manipulation and numerical operations.
--   **Scikit-learn**: For building and evaluating machine learning models.
--   **Streamlit**: For creating and deploying the web application.
--   **Matplotlib & Seaborn**: For data visualization.
--   **Jupyter Notebook**: For model development and experimentation.
-
-## 📊 Dataset
+## Dataset
 
 The model was trained on the `Crop_recommendation.csv` dataset, which contains 2200 data points. The dataset has the following 8 columns:
 -   `N`: Nitrogen content in soil
@@ -48,32 +54,55 @@ The model was trained on the `Crop_recommendation.csv` dataset, which contains 2
 -   `rainfall`: Rainfall in mm
 -   `label`: The recommended crop (22 unique crop types)
 
-## 🧠 Model Training & Evaluation
+## Model Training and Evaluation
 
-Several machine learning models were trained and evaluated to find the best one for this task. The models included:
--   Decision Tree
--   Gaussian Naive Bayes
--   Support Vector Machine (SVM)
--   Logistic Regression
--   **Random Forest**
--   XGBoost
--   K-Nearest Neighbors (KNN)
+Several machine learning models were trained and evaluated to find the best one for this task. The Random Forest model was chosen for the final application due to its high accuracy of **99.5%** on the test set.
 
-The Random Forest model was chosen for the final application due to its high accuracy of **99.5%** on the test set.
+**Classification Report:**
 
-<!-- You can add your model accuracy comparison image here -->
+| Crop          | Precision | Recall | F1-Score | Support |
+|---------------|-----------|--------|----------|---------|
+| apple         | 1.00      | 1.00   | 1.00     | 13      |
+| banana        | 1.00      | 1.00   | 1.00     | 17      |
+| blackgram     | 1.00      | 1.00   | 1.00     | 16      |
+| chickpea      | 1.00      | 1.00   | 1.00     | 21      |
+| coconut       | 1.00      | 1.00   | 1.00     | 21      |
+| coffee        | 1.00      | 1.00   | 1.00     | 22      |
+| cotton        | 1.00      | 1.00   | 1.00     | 20      |
+| grapes        | 1.00      | 1.00   | 1.00     | 18      |
+| jute          | 0.93      | 1.00   | 0.97     | 28      |
+| kidneybeans   | 1.00      | 1.00   | 1.00     | 14      |
+| lentil        | 1.00      | 1.00   | 1.00     | 23      |
+| maize         | 1.00      | 1.00   | 1.00     | 21      |
+| mango         | 1.00      | 1.00   | 1.00     | 26      |
+| mothbeans     | 1.00      | 1.00   | 1.00     | 19      |
+| mungbean      | 1.00      | 1.00   | 1.00     | 24      |
+| muskmelon     | 1.00      | 1.00   | 1.00     | 23      |
+| orange        | 1.00      | 1.00   | 1.00     | 29      |
+| papaya        | 1.00      | 1.00   | 1.00     | 19      |
+| pigeonpeas    | 1.00      | 1.00   | 1.00     | 18      |
+| pomegranate   | 1.00      | 1.00   | 1.00     | 17      |
+| rice          | 1.00      | 0.88   | 0.93     | 16      |
+| watermelon    | 1.00      | 1.00   | 1.00     | 15      |
+| **Accuracy**  |           |        | **1.00** | **440** |
+| **Macro Avg** | 1.00      | 0.99   | 1.00     | 440     |
+| **Weighted Avg**| 1.00    | 1.00   | 1.00     | 440     |
 
-## 🚀 How to Run Locally
+**Confusion Matrix:**
+
+![Confusion Matrix](confusion_matrix.png)
+
+## How to Run Locally
 
 To run this project on your local machine, follow these steps:
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/PRINCE-GUPTA-101/AI-Crop-Recommendation-System.git
-    cd AI-Crop-Recommendation-System
+    git clone https://github.com/your-username/KrushiAI-Crop-Recommendation-System.git
+    cd KrushiAI-Crop-Recommendation-System
     ```
 
-2.  **Create a virtual environment (recommended):**
+2.  **Create a virtual environment:**
     ```sh
     python -m venv venv
     source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
@@ -89,18 +118,10 @@ To run this project on your local machine, follow these steps:
     streamlit run webapp.py
     ```
 
-The application will then be available at `http://localhost:8501`.
+## How to Contribute
 
-## 🌟 Future Scope
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue. If you want to contribute code, please fork the repository and create a pull request.
 
--   Integrate with real-time weather APIs to automatically fetch climate data.
--   Add a fertilizer recommendation feature.
--   Include a plant disease identification module as part of the larger KrushiAI project.
--   Improve the user interface and add more visualizations.
+## License
 
-## 🙏 Acknowledgements
-
-A big thank you to the open-source community for providing the tools and libraries that made this project possible.
-
----
-*This README was generated with the help of an AI assistant.*
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
