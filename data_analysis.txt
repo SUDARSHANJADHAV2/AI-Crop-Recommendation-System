@@ -1,0 +1,55 @@
+=== SHAPE ===
+ (2200, 8)
+
+=== NULLS ===
+ N              0
+P              0
+K              0
+temperature    0
+humidity       0
+ph             0
+rainfall       0
+label          0
+dtype: int64
+
+=== DUPLICATES ===
+ 0
+
+=== LABELS ===
+ label
+rice           100
+maize          100
+chickpea       100
+kidneybeans    100
+pigeonpeas     100
+mothbeans      100
+mungbean       100
+blackgram      100
+lentil         100
+pomegranate    100
+banana         100
+mango          100
+grapes         100
+watermelon     100
+muskmelon      100
+apple          100
+orange         100
+papaya         100
+coconut        100
+cotton         100
+jute           100
+coffee         100
+Name: count, dtype: int64
+
+=== STATS ===
+                  N            P  ...           ph     rainfall
+count  2200.000000  2200.000000  ...  2200.000000  2200.000000
+mean     50.551818    53.362727  ...     6.469480   103.463655
+std      36.917334    32.985883  ...     0.773938    54.958389
+min       0.000000     5.000000  ...     3.504752    20.211267
+25%      21.000000    28.000000  ...     5.971693    64.551686
+50%      37.000000    51.000000  ...     6.425045    94.867624
+75%      84.250000    68.000000  ...     6.923643   124.267508
+max     140.000000   145.000000  ...     9.935091   298.560117
+
+[8 rows x 7 columns]
