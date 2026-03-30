@@ -1,0 +1,8 @@
+
+soil_type: ['alluvial' 'clayey' 'loamy' 'red' 'black' 'sandy' 'laterite']
+
+season: ['Kharif' 'Rabi' 'Perennial' 'Zaid']
+
+irrigation: ['irrigated' 'semi-irrigated' 'rainfed']
+
+Classes: 45

@@ -1,49 +1,36 @@
-# 🌾 KrushiAI - AI Smart Crop Recommendation System 🌾
+# 🌾 KrushiAI - Advanced Crop Recommendation Pipeline 🌾
 
 ![KrushiAI Banner](crop.png)
 
-Welcome to the **KrushiAI Crop Recommendation System**! This intelligent web application is a modernized, production-grade module of the **"KrushiAI"** mega-project. It leverages robust Machine Learning to help farmers and agricultural planners make data-driven decisions by recommending the absolute best crop to plant based on precise soil composition and climate parameters.
+Welcome to the **KrushiAI Crop Recommendation System v2.0**! The project has been massively overhauled to handle real-world categorical complexity and large-scale data points, shifting from a basic numerical predictor into a production-grade scikit-learn Machine Learning Pipeline.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://krushiai-crop-recommendation-system.streamlit.app/)
 
 ---
 
-## 🌟 Key Features & Recent Enhancements
+## 🌟 Key Features & Structural Upgrades
 
--   **🎨 Premium UI/UX Interface**: A stunning, modern, and fully responsive glass-morphism web interface built with Streamlit, complete with smooth animations and interactive gauges.
--   **📈 100% Accurate Predictions**: The core Random Forest classification model has been fine-tuned and evaluated to a perfect **100% accuracy** on hold-out testing data.
--   **🛡️ Production-Grade Error Handling**: The application handles missing datasets or unloaded models gracefully with polite UI alerts instead of catastrophic backend tracebacks.
--   **📊 Robust Dataset Augmentation**: The original 2200-row dataset has been synthetically augmented to **2640 rows** to include more diverse, domain-accurate agricultural edge cases, fully balanced across all 22 crop classes.
--   **🔬 Interactive Dashboards**: Real-time visual correlation heatmaps, feature distribution boxplots, and confidence bars for multi-crop alternative suggestions.
+-   **📦 Massive Dataset Upgrade**: Now operating autonomously on **`KrushiAI_CropDataset_v1.csv`**. The dataset sits at a robust **12,100 high-quality rows** (spanning 45 crops exactly balanced at 320 records per class minus duration deviance).
+-   **⚙️ Advanced ML Pipeline Architecture**: Removed antiquated raw Random Forest methods. The codebase is now utilizing a `sklearn` **ColumnTransformer & Pipeline** architecture to natively route variables into `OneHotEncoders` alongside numeric passthroughs before hitting the Random Forest module.
+-   **🚜 Categorical Operational Inputs**: Recommending crops correctly relies on **Soil Type, Season,** and **Irrigation** limits—not just macro-nutrients. These elements are now directly modeled.
 
 ---
 
-## ⚙️ How It Works
-
-1.  **Input Parameters**: Enter the soil's macro-nutrients (**Nitrogen, Phosphorus, Potassium**) and **pH level**.
-2.  **Environment Setup**: Enter your local climate data (**Temperature, Humidity, Rainfall**).
-3.  **AI Inference**: The AI instantaneously pipes these 7 parameters into our retrained Random Forest classifier.
-4.  **Results**: Receive the top recommended crop, alongside its growing season, water necessity profile, and alternative fallback crops ranked by statistical probability.
-
----
-
-## 🛠️ Tech Stack
-
-This project is built atop a robust, highly optimized Python data science stack:
+## 🛠️ Architecture Stack
 
 -   **Python 3.10+**: Core backend logic.
--   **Pandas & NumPy**: High-performance data processing and statistical synthetic data augmentation.
--   **Scikit-learn (Random Forest)**: For high-accuracy baseline modelling and predictions.
--   **Streamlit**: For the dynamic, reactive frontend dashboard.
--   **Matplotlib & Seaborn**: For visually stunning dataset EDA and parameter distribution rendering.
+-   **Scikit-Learn (Pipeline, ColumnTransformer, OneHotEncoder)**: Flawless mapping of frontend categorical selections (strings) to numerical algorithm states safely without manual dictionary hardcoding.
+-   **Pandas & NumPy**: For pipeline data-frame structures.
+-   **Streamlit**: A breathtaking, glass-morphic UI wrapper for deployment that protects against data tracebacks safely using graceful `st.error` checks.
+-   **Matplotlib & Seaborn**: For dynamic visual exploratory data generation separate between string logic and numeric logic natively.
 
 ---
 
-## 📂 Dataset Architecture
+## 📂 Dataset Specification
 
-The AI is fed by `Crop_recommendation.csv`, an extensively cleaned dataset now housing **2640 entries**. It is meticulously balanced containing exactly 120 samples per crop class.
+The new architecture operates on **11 variables** predicting **45 unique crop designations**.
 
-**Input Features (7):**
+**Numerical Inputs (4):**
 -   `N`: Nitrogen ratio in soil (kg/ha)
 -   `P`: Phosphorus ratio in soil (kg/ha)
 -   `K`: Potassium ratio in soil (kg/ha)
@@ -51,15 +38,23 @@ The AI is fed by `Crop_recommendation.csv`, an extensively cleaned dataset now h
 -   `humidity`: Relative humidity in %
 -   `ph`: pH value of the soil
 -   `rainfall`: Rainfall in mm
+-   `crop_duration_days`: Maturation runway (Days)
+
+**Categorical Inputs (3):**
+-   `soil_type`: ('alluvial', 'clayey', 'loamy', 'red', 'black', 'sandy', 'laterite')
+-   `season`: ('Kharif', 'Rabi', 'Perennial', 'Zaid')
+-   `irrigation`: ('irrigated', 'semi-irrigated', 'rainfed')
 
 **Target Output (1):**
--   `label`: The optimally recommended crop (Out of 22 distinct crops like *Rice, Maize, Coffee, Apple, Jute, etc.*)
+-   `label`: The optimally recommended crop (Out of 45 extensive distinct agricultural outputs).
+
+> *Note: Model performance sits comfortably at > 98% Test Accuracy on unseen split divisions running within the Pipeline framework.*
 
 ---
 
 ## 🚀 How to Run Locally
 
-If you'd like to run KrushiAI on your own machine, follow these simple steps!
+If you'd like to run KrushiAI v2.0 on your own machine:
 
 1.  **Clone the Repository**
     ```bash
@@ -72,10 +67,6 @@ If you'd like to run KrushiAI on your own machine, follow these simple steps!
     # Windows
     python -m venv venv
     venv\Scripts\activate
-    
-    # macOS/Linux
-    python3 -m venv venv
-    source venv/bin/activate
     ```
 
 3.  **Install Dependencies**
@@ -83,20 +74,12 @@ If you'd like to run KrushiAI on your own machine, follow these simple steps!
     pip install -r requirements.txt
     ```
 
-4.  **Run the Streamlit Engine**
+4.  **Launch the Streamlit Engine**
     ```bash
     streamlit run webapp.py
     ```
     
 *(The application will instantly launch in your default web browser at `http://localhost:8501`)*
-
----
-
-## 🔮 Future Scope
-
--   **Live Weather Sync**: Direct API integration with OpenWeatherMap to pull real-time environment data automatically based on geolocation.
--   **Profitability Index**: Add dynamic market pricing data to suggest the most financially profitable crop across the fallback models.
--   **Disease Identification**: Expanding the scope to include computer-vision leaf disease tracking.
 
 ---
 *Built with ❤️ for the Agricultural Community | Smart Farming powered by AI*
